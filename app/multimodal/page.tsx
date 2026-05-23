@@ -2,7 +2,7 @@ import { MultimodalView } from '@/components/MultimodalView';
 import { Nav } from '@/components/Nav';
 
 export const metadata = {
-  title: 'Multimodal · OpenRouter Studio',
+  title: 'Multimodal · Polyglot Studio',
 };
 
 export default function MultimodalPage() {

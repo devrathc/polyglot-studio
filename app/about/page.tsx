@@ -2,7 +2,7 @@ import { AboutView } from '@/components/AboutView';
 import { Nav } from '@/components/Nav';
 
 export const metadata = {
-  title: 'About · OpenRouter Studio',
+  title: 'About · Polyglot Studio',
 };
 
 export default function AboutPage() {

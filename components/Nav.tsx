@@ -19,7 +19,7 @@ const TABS = [
 const isDev = process.env.NODE_ENV !== 'production';
 
 async function quitApp() {
-  if (!confirm('Stop the OpenRouter Studio dev server?')) return;
+  if (!confirm('Stop the Polyglot Studio dev server?')) return;
   try {
     await fetch('/api/exit', { method: 'POST' });
   } catch {
@@ -37,7 +37,7 @@ export function Nav() {
       <div className="mx-auto flex h-12 max-w-[1400px] items-center gap-6 px-5">
         <div className="flex items-center gap-2 text-sm font-semibold tracking-tight">
           <span className="inline-block h-2 w-2 rounded-full bg-emerald-400" />
-          OpenRouter Studio
+          Polyglot Studio
         </div>
         <nav className="flex items-center gap-1 text-sm">
           {TABS.map((t) => {

@@ -2,7 +2,7 @@ import { CompareView } from '@/components/CompareView';
 import { Nav } from '@/components/Nav';
 
 export const metadata = {
-  title: 'Compare · OpenRouter Studio',
+  title: 'Compare · Polyglot Studio',
 };
 
 export default function ComparePage() {

@@ -4,7 +4,7 @@ import { PricingNote } from '@/components/PricingNote';
 import { TabHeader } from '@/components/TabHeader';
 
 export const metadata = {
-  title: 'Models · OpenRouter Studio',
+  title: 'Models · Polyglot Studio',
 };
 
 export default function ModelsPage() {

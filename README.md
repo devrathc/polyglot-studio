@@ -1,6 +1,8 @@
-# OpenRouter Studio
+# Polyglot Studio
 
-A local-first Next.js studio for [OpenRouter](https://openrouter.ai) — chat with any of 360+ models, compare up to 5 models side-by-side on the same prompt, route through `openrouter/free` / `openrouter/auto`, and run vision models with image attachment. Markdown rendering, per-tab history, and per-call token / dollar cost breakdowns throughout.
+A local-first Next.js studio that talks to the [OpenRouter](https://openrouter.ai) API — chat with any of 360+ models, compare up to 5 models side-by-side on the same prompt, route through `openrouter/free` / `openrouter/auto`, and run vision models with image attachment. Markdown rendering, per-tab history, and per-call token / dollar cost breakdowns throughout.
+
+> **Unofficial third-party client.** Not affiliated with, endorsed by, or sponsored by OpenRouter Inc. or any model provider. "OpenRouter" is a trademark of its respective owner; this project uses the name only to identify the API it integrates with.
 
 ## Tabs
 
@@ -20,8 +22,8 @@ A local-first Next.js studio for [OpenRouter](https://openrouter.ai) — chat wi
 ## Quick start
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USER>/openrouter-studio.git
-cd openrouter-studio
+git clone https://github.com/devrathc/polyglot-studio.git
+cd polyglot-studio
 cp .env.example .env.local
 # Open .env.local and paste your OpenRouter API key into OPENROUTER_API_KEY
 npm install
@@ -118,6 +120,8 @@ scripts/
 ## Disclaimers
 
 This project is **not affiliated with, endorsed by, or sponsored by** OpenRouter Inc., Anthropic, OpenAI, Google, or any model provider. "OpenRouter" is a trademark of its respective owner; this project uses the name solely for descriptive purposes (it is a UI for the OpenRouter API).
+
+**Third-party client; BYOK.** You bring your own OpenRouter account and API key. This app does not resell API access, aggregate routing on its own, scrape the Site, or attempt to reverse-engineer the Service — it uses only public, documented OpenRouter API endpoints. Your use of the OpenRouter API through this app is governed by [OpenRouter's Terms of Service](https://openrouter.ai/terms) between you and OpenRouter, Inc.
 
 **API costs are your responsibility.** This app sends your prompts to OpenRouter using the API key you provide. You are billed by OpenRouter for every request. The author is not responsible for any charges incurred. Set a monthly limit on your OpenRouter key.
 

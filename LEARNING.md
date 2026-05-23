@@ -1,4 +1,4 @@
-# Learning notes — OpenRouter Studio
+# Learning notes — Polyglot Studio
 
 A personal write-up of what this project does, the OpenRouter surfaces it touches, and the parts of the platform that took me a while to internalize. Written as my own reference, not user docs (those live in [README.md](./README.md)).
 
@@ -37,7 +37,7 @@ Three rules cover most of what surprised me:
 
 ```
                        ┌────────────────────────────────────────────────────┐
-                       │  Your machine: OpenRouter Studio                   │
+                       │  Your machine: Polyglot Studio                     │
                        │  (the browser talks only to /api/* on localhost)   │
                        └────────────────────────────────────────────────────┘
                                               │

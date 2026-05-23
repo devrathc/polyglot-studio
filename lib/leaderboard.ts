@@ -7,7 +7,7 @@
 
 import type { CallRecord, BlindVote } from '@/lib/stats';
 
-const OPT_IN_KEY = 'openrouter-studio:leaderboard:opt-in';
+const OPT_IN_KEY = 'polyglot-studio:leaderboard:opt-in';
 
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';

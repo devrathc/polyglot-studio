@@ -41,8 +41,8 @@ export type BlindVote = {
   winner: string;
 };
 
-const RECORDS_KEY = 'openrouter-studio:stats:records:v1';
-const VOTES_KEY = 'openrouter-studio:stats:votes:v1';
+const RECORDS_KEY = 'polyglot-studio:stats:records:v1';
+const VOTES_KEY = 'polyglot-studio:stats:votes:v1';
 const MAX_RECORDS = 1000;
 const MAX_VOTES = 500;
 

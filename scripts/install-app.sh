@@ -1,5 +1,5 @@
 #!/bin/bash
-# Installs OpenRouter Studio as a launchd LaunchAgent so it auto-starts at login
+# Installs Polyglot Studio as a launchd LaunchAgent so it auto-starts at login
 # and runs in the background. Visit http://localhost:3030 to use it.
 #
 # By default runs `next dev` so code edits hot-reload into the dock app
@@ -13,7 +13,7 @@
 
 set -euo pipefail
 
-LABEL="com.openrouter-studio"
+LABEL="com.github.devrathc.polyglot-studio"
 PORT="${PORT:-3030}"
 MODE="${MODE:-dev}"
 PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

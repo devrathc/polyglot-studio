@@ -1,9 +1,9 @@
 #!/bin/bash
-# Stops the OpenRouter Studio LaunchAgent and removes its plist.
+# Stops the Polyglot Studio LaunchAgent and removes its plist.
 
 set -euo pipefail
 
-LABEL="com.openrouter-studio"
+LABEL="com.github.devrathc.polyglot-studio"
 PLIST_PATH="$HOME/Library/LaunchAgents/$LABEL.plist"
 UID_NUM="$(id -u)"
 

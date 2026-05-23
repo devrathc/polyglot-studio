@@ -2,7 +2,7 @@
 
 ## How your API key is handled
 
-OpenRouter Studio is a single-tenant local app. Your `OPENROUTER_API_KEY` is read **server-side only** from `.env.local`:
+Polyglot Studio is a single-tenant local app. Your `OPENROUTER_API_KEY` is read **server-side only** from `.env.local`:
 
 - The Next.js API routes under `app/api/*` use it to call `https://openrouter.ai/api/v1/...`.
 - It is never embedded in client bundles, never returned in any response, and never written to disk by the app.
@@ -17,7 +17,7 @@ The BYOK registry (`components/ByokRegistry.tsx`) stores provider keys in **`loc
 Each request to OpenRouter includes:
 - The model id, messages, and tuning params you chose.
 - An `HTTP-Referer` header set to `NEXT_PUBLIC_SITE_URL` (default `http://localhost:3000`) — shown on OpenRouter's analytics dashboard so you can tell traffic apart.
-- An `X-Title: OpenRouter Studio` header for the same reason.
+- An `X-Title: Polyglot Studio` header for the same reason.
 
 Nothing else. There is no analytics endpoint, no telemetry, no crash reporter.
 

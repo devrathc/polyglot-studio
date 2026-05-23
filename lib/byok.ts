@@ -76,7 +76,7 @@ export const OPENROUTER_INTEGRATIONS_URL =
 
 export type ByokState = Partial<Record<ByokProviderSlug, boolean>>;
 
-const STORAGE_KEY = 'openrouter-studio:byok:v1';
+const STORAGE_KEY = 'polyglot-studio:byok:v1';
 
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';

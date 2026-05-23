@@ -267,7 +267,7 @@ export function AboutView() {
           For the full mental model — wallets, the four-layer cost stack, failure modes, the precise
           way OpenRouter computes the bill — see{' '}
           <a
-            href="https://github.com/anthropics/openrouter-studio/blob/main/LEARNING.md"
+            href="https://github.com/devrathc/polyglot-studio/blob/main/LEARNING.md"
             target="_blank"
             rel="noopener noreferrer"
             className="text-emerald-300 underline-offset-2 hover:underline"

@@ -1,4 +1,4 @@
-# Publishing OpenRouter Studio to GitHub
+# Publishing Polyglot Studio to GitHub
 
 End-to-end guide for taking this working copy to a public GitHub repo without leaking secrets. Follow it once for the initial publish; after that the `CHECKLIST.md` is enough for re-publishes.
 
@@ -164,7 +164,7 @@ Pick one method.
 ```bash
 brew install gh             # macOS, if not already installed
 gh auth login               # interactive: pick GitHub.com, HTTPS, browser auth
-gh repo create openrouter-studio --public --source=. --remote=origin --description "Local-first Next.js studio for OpenRouter — chat, compare, free, multimodal."
+gh repo create polyglot-studio --public --source=. --remote=origin --description "Local-first Next.js studio for OpenRouter — chat, compare, free, multimodal."
 ```
 
 This creates the GitHub repo *and* sets the remote in one step. Skip to step 8.
@@ -172,14 +172,14 @@ This creates the GitHub repo *and* sets the remote in one step. Skip to step 8.
 ### Option B: Web UI
 
 1. Go to https://github.com/new.
-2. Repository name: `openrouter-studio` (or whatever you prefer).
+2. Repository name: `polyglot-studio` (or whatever you prefer).
 3. Visibility: **Public**.
 4. **Do not** check "Add a README", "Add .gitignore", or "Add license" — you already have all three locally and double-init causes merge headaches.
 5. Click **Create repository**.
 6. Wire your local repo to it:
 
    ```bash
-   git remote add origin https://github.com/<YOUR_GITHUB_USER>/openrouter-studio.git
+   git remote add origin https://github.com/<YOUR_GITHUB_USER>/polyglot-studio.git
    ```
 
 ---
@@ -202,9 +202,9 @@ After it pushes, open the repo URL. You should see your README rendered.
 
 ```bash
 cd /tmp
-rm -rf openrouter-studio-test
-git clone https://github.com/<YOUR_GITHUB_USER>/openrouter-studio.git openrouter-studio-test
-cd openrouter-studio-test
+rm -rf polyglot-studio-test
+git clone https://github.com/<YOUR_GITHUB_USER>/polyglot-studio.git polyglot-studio-test
+cd polyglot-studio-test
 ls -la
 ```
 

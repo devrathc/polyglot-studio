@@ -15,7 +15,7 @@ function build(): OpenAI {
     baseURL: 'https://openrouter.ai/api/v1',
     defaultHeaders: {
       'HTTP-Referer': process.env.NEXT_PUBLIC_SITE_URL ?? 'http://localhost:3000',
-      'X-Title': 'OpenRouter Studio',
+      'X-Title': 'Polyglot Studio',
     },
   });
 }

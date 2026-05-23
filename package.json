@@ -1,5 +1,5 @@
 {
-  "name": "openrouter-studio",
+  "name": "polyglot-studio",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,9 +12,9 @@
     "app:install": "./scripts/install-app.sh",
     "app:install:prod": "MODE=prod ./scripts/install-app.sh",
     "app:uninstall": "./scripts/uninstall-app.sh",
-    "app:restart": "launchctl kickstart -k gui/$(id -u)/com.openrouter-studio",
+    "app:restart": "launchctl kickstart -k gui/$(id -u)/com.github.devrathc.polyglot-studio",
     "app:logs": "tail -f .app-logs/stdout.log .app-logs/stderr.log",
-    "app:status": "launchctl list | grep com.openrouter-studio || echo 'not loaded'"
+    "app:status": "launchctl list | grep com.github.devrathc.polyglot-studio || echo 'not loaded'"
   },
   "dependencies": {
     "next": "^16.2.5",

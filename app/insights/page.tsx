@@ -2,7 +2,7 @@ import { InsightsView } from '@/components/InsightsView';
 import { Nav } from '@/components/Nav';
 
 export const metadata = {
-  title: 'Insights · OpenRouter Studio',
+  title: 'Insights · Polyglot Studio',
 };
 
 export default function InsightsPage() {

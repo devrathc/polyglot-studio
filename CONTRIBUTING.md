@@ -5,8 +5,8 @@ Thanks for considering a contribution. This is a small project; the bar for chan
 ## Quick start for contributors
 
 ```bash
-git clone https://github.com/<YOUR_GITHUB_USER>/openrouter-studio.git
-cd openrouter-studio
+git clone https://github.com/devrathc/polyglot-studio.git
+cd polyglot-studio
 cp .env.example .env.local        # add your OpenRouter API key
 npm install
 npm run dev                       # opens http://localhost:3000

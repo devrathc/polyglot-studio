@@ -3,7 +3,7 @@
 // dropped into the empty chat. After that the flag stays set forever
 // (cleared only when localStorage is wiped).
 
-const KEY = 'openrouter-studio:onboarded:v1';
+const KEY = 'polyglot-studio:onboarded:v1';
 
 function isBrowser(): boolean {
   return typeof window !== 'undefined' && typeof window.localStorage !== 'undefined';
@@ -24,7 +24,7 @@ export function markOnboarded(): void {
 export const SAMPLE_BLIND_PROMPT =
   "In 200 words, explain why distributed consensus (like Raft) is hard to get right. Keep it concrete — name at least one specific failure mode that's easy to overlook.";
 
-export const SAMPLE_COMPARE_DEMO_FLAG = 'openrouter-studio:demo:blind-compare';
+export const SAMPLE_COMPARE_DEMO_FLAG = 'polyglot-studio:demo:blind-compare';
 
 /** Drop a one-shot demo payload that CompareView picks up on next mount. */
 export function stageBlindDemo(): void {

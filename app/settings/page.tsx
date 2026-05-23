@@ -2,7 +2,7 @@ import { ByokRegistry } from '@/components/ByokRegistry';
 import { Nav } from '@/components/Nav';
 
 export const metadata = {
-  title: 'Settings · OpenRouter Studio',
+  title: 'Settings · Polyglot Studio',
 };
 
 export default function SettingsPage() {

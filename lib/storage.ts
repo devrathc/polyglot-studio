@@ -20,10 +20,10 @@ export type StoredSession = {
   webAccess?: boolean;
 };
 
-const KEY = 'openrouter-studio:sessions:v1';
-const SELECTED_MODEL_KEY = 'openrouter-studio:selected-model';
-const SELECTED_PRESET_KEY = 'openrouter-studio:selected-preset';
-const CHAT_MODE_KEY = 'openrouter-studio:chat-mode';
+const KEY = 'polyglot-studio:sessions:v1';
+const SELECTED_MODEL_KEY = 'polyglot-studio:selected-model';
+const SELECTED_PRESET_KEY = 'polyglot-studio:selected-preset';
+const CHAT_MODE_KEY = 'polyglot-studio:chat-mode';
 
 export type ChatMode = 'default' | 'free';
 
@@ -108,7 +108,7 @@ export function setChatMode(mode: ChatMode): void {
   window.localStorage.setItem(CHAT_MODE_KEY, mode);
 }
 
-const WEB_ACCESS_KEY = 'openrouter-studio:chat-web-access';
+const WEB_ACCESS_KEY = 'polyglot-studio:chat-web-access';
 
 export function getChatWebAccess(): boolean | null {
   if (!isBrowser()) return null;
@@ -127,9 +127,9 @@ export function setChatWebAccess(on: boolean): void {
 export type SessionListKey = 'free' | 'multimodal' | 'compare';
 
 const SESSION_KEYS: Record<SessionListKey, string> = {
-  free: 'openrouter-studio:sessions:free:v1',
-  multimodal: 'openrouter-studio:sessions:multimodal:v1',
-  compare: 'openrouter-studio:sessions:compare:v1',
+  free: 'polyglot-studio:sessions:free:v1',
+  multimodal: 'polyglot-studio:sessions:multimodal:v1',
+  compare: 'polyglot-studio:sessions:compare:v1',
 };
 
 export function loadSessionList<T>(tab: SessionListKey): T[] {
@@ -171,8 +171,8 @@ export function saveActiveId(tab: SessionListKey, id: string | null): void {
 // session for that mode.
 
 const COMPARE_DEFAULTS_KEY: Record<ChatMode, string> = {
-  default: 'openrouter-studio:compare:defaults:v1',
-  free: 'openrouter-studio:compare:defaults:free:v1',
+  default: 'polyglot-studio:compare:defaults:v1',
+  free: 'polyglot-studio:compare:defaults:free:v1',
 };
 
 export function loadCompareDefaults(mode: ChatMode): string[] | null {
@@ -198,7 +198,7 @@ export function saveCompareDefaults(mode: ChatMode, models: string[]): void {
   }
 }
 
-const COMPARE_MODE_KEY = 'openrouter-studio:compare:mode';
+const COMPARE_MODE_KEY = 'polyglot-studio:compare:mode';
 
 export function getCompareMode(): ChatMode | null {
   if (!isBrowser()) return null;
