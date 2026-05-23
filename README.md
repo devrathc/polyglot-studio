@@ -1,6 +1,6 @@
 # Polyglot Studio
 
-A local-first Next.js studio that talks to the [OpenRouter](https://openrouter.ai) API — chat with any of 360+ models, compare up to 5 models side-by-side on the same prompt, route through `openrouter/free` / `openrouter/auto`, and run vision models with image attachment. Markdown rendering, per-tab history, and per-call token / dollar cost breakdowns throughout.
+A local-first Next.js studio that talks to the [OpenRouter](https://openrouter.ai) API — chat with any of 360+ models, compare up to 5 side-by-side on the same prompt, route through the $0 free pool, and run vision models with image attachment. Markdown rendering, persistent per-tab history, per-call token / dollar cost breakdowns, and a personal Insights tab that scores cost-per-good-answer over your actual usage.
 
 ![Polyglot Studio — Compare tab showing 5 models responding to the same prompt with per-call token and dollar cost breakdowns](screenshots/compare.png)
 
@@ -10,11 +10,15 @@ A local-first Next.js studio that talks to the [OpenRouter](https://openrouter.a
 
 | Tab | What it does | Endpoint |
 |---|---|---|
-| **Chat** | Single-conversation chat with presets (Auto / Quality / Balanced / Speed / Cost) or manual model selection. Quality preset enables `reasoning.effort=medium`. | `POST /chat/completions` (streaming) |
-| **Compare** | One prompt → 1–5 models in parallel. Per-card breakdown of input / cached / output / reasoning tokens and dollar cost. | `POST /chat/completions` (non-streaming) per model |
-| **Free** | Routes every request through `openrouter/free` — random pick from $0 models that match required capabilities. Resolved model is shown after each call. | `POST /chat/completions` · `model: openrouter/free` |
+| **Chat** | Single-conversation chat with presets (Auto / Quality / Balanced / Speed / Cost) or manual model selection. Quality preset enables `reasoning.effort=medium`. Default / Free Only mode toggle; web access (server tools) available in Default. | `POST /chat/completions` (streaming) |
+| **Compare** | One prompt → 1–5 models in parallel. Per-card breakdown of input / cached / output / reasoning tokens and dollar cost. Includes a Blind mode that hides model identities until you've picked a winner. | `POST /chat/completions` (non-streaming) per model |
 | **Multimodal** | Drop / paste / upload images and ask vision-capable models. Defaults to `openrouter/auto` so OpenRouter picks the vision model per request. | `POST /chat/completions` with `text` + `image_url` content blocks |
-| **Models** | Searchable catalog: context windows, pricing, modalities, providers. | `GET /models` (cached 10 min) |
+| **Models** | Searchable catalog: context windows, pricing, modalities, providers. Split into Free pool and Paid catalog. | `GET /models` (cached 10 min) |
+| **Insights** | Personal stats over your usage: cost-per-good-answer from your 👍 / 👎 ratings, API-vs-subscription arbitrage math, and a blind-preference profile built from Compare's Blind mode. | client-side, computed from local history |
+
+A **Free Only** mode toggle inside Chat and Compare routes every call through the `:free` pool — random pick from $0 models, rate-limited (≈ 20 RPM; daily caps are higher with $10+ lifetime deposited on your account). Earlier versions had a dedicated Free tab; free-pool routing is now a mode, not a separate tab.
+
+Plus **About** (what the app is for, when to use it) and **Settings** (BYOK registry — record which providers you've BYOK'd at `openrouter.ai/settings/integrations`).
 
 ## Prerequisites
 
@@ -48,7 +52,7 @@ The dev server auto-opens http://localhost:3000 in your default browser when it'
 Other behavior tuned in code:
 
 - **Per-provider `max_tokens` defaults** — `lib/budget.ts`. Anthropic = 1024, OpenAI = 4096, reasoning models (gpt-5, o-series) = 16384, others = 2048. The server auto-retries with a smaller cap on 402 (insufficient credits) and a larger cap when a reasoning model exhausts its budget on internal thinking.
-- **Compare model defaults** — `components/CompareView.tsx` (`DEFAULT_MODELS`). Currently Opus 4.5, Sonnet 4.6, GPT-5, Gemini 2.5 Pro, Grok 4.
+- **Compare model defaults** — `lib/routing.ts` (`DEFAULT_COMPARE_DEFAULTS`). Currently Opus 4.5, Sonnet 4.6, GPT-5, Gemini 2.5 Pro, Grok 4. A `resolveCuratedDefaults` helper swaps in the newest vendor successor (e.g. `x-ai/grok-4` → `x-ai/grok-4.20`) if an exact id has rotated out of the live catalog.
 - **LAN IP allowlist for HMR** — `next.config.ts` (`allowedDevOrigins`). Add your LAN IP if you access the dev server from another device.
 
 ## Costs and your API key
@@ -98,18 +102,24 @@ app/
     chat/route.ts          # streaming chat-completions proxy
     compare/route.ts       # parallel multi-model proxy with auto-retry
     models/route.ts        # cached catalog
+    credits/route.ts       # OpenRouter credits balance lookup
+    leaderboard/route.ts   # opt-in cost-per-good-answer rollup (preview)
     exit/route.ts          # graceful dev-server shutdown
   page.tsx                 # Chat tab
   compare/page.tsx         # Compare tab
-  free/page.tsx            # Free Models Router tab
   multimodal/page.tsx      # Multimodal tab
   models/page.tsx          # Catalog browser
-components/                # ChatPanel, CompareView, FreeChatView, MultimodalView, …
+  insights/page.tsx        # Personal stats (cost per 👍, arbitrage, blind prefs)
+  about/page.tsx           # About page
+  settings/page.tsx        # BYOK registry
+components/                # ChatPanel, CompareView, MultimodalView, InsightsView, AboutView, …
 lib/
   openrouter.ts            # OpenAI-SDK client pointed at OpenRouter
   budget.ts                # max_tokens defaults + 402 parsing helpers
   pricing.ts               # cost computation, catalog fetch
-  routing.ts               # presets and prompt-routing heuristics
+  routing.ts               # presets, prompt-routing heuristics, and curated defaults
+  byok.ts                  # BYOK registry helpers
+  stats.ts                 # Insights aggregations over local history
   sse.ts                   # streaming event parser
   storage.ts               # per-tab session list helpers
 scripts/
