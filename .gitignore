@@ -1,0 +1,38 @@
+# dependencies
+node_modules
+
+# build output
+.next
+out
+build
+
+# Next.js / TypeScript
+next-env.d.ts
+*.tsbuildinfo
+
+# env (local secrets — never commit)
+.env
+.env.*
+.env*.local
+!.env.example
+
+# runtime artifacts
+*.log
+.app-logs
+
+# OS / editor dust
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# editor / agent local config (may contain personal paths or session state)
+.claude/
+.cursor/
+.idea/
+.vscode/settings.json
+.aider*
+
+# deploys
+.vercel

@@ -1,0 +1,36 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "dev",
+      "type": "npm",
+      "script": "dev:no-open",
+      "isBackground": true,
+      "presentation": {
+        "reveal": "always",
+        "panel": "dedicated",
+        "clear": true
+      },
+      "problemMatcher": [
+        {
+          "owner": "next",
+          "pattern": [
+            { "regexp": "^.*$", "file": 0, "location": 0, "message": 0 }
+          ],
+          "background": {
+            "activeOnStart": true,
+            "beginsPattern": "^.*next dev.*$",
+            "endsPattern": "^.*Ready in.*$"
+          }
+        }
+      ]
+    },
+    {
+      "label": "dev: open in Simple Browser",
+      "dependsOn": ["dev"],
+      "command": "${command:simpleBrowser.show}",
+      "args": ["http://localhost:3000"],
+      "problemMatcher": []
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "name": "openrouter-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "dev:no-open": "next dev",
+    "kill": "lsof -ti :${PORT:-3000} | xargs kill -9 2>/dev/null || true",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "app:install": "./scripts/install-app.sh",
+    "app:install:prod": "MODE=prod ./scripts/install-app.sh",
+    "app:uninstall": "./scripts/uninstall-app.sh",
+    "app:restart": "launchctl kickstart -k gui/$(id -u)/com.openrouter-studio",
+    "app:logs": "tail -f .app-logs/stdout.log .app-logs/stderr.log",
+    "app:status": "launchctl list | grep com.openrouter-studio || echo 'not loaded'"
+  },
+  "dependencies": {
+    "next": "^16.2.5",
+    "openai": "^4.77.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.16",
+    "typescript": "^5.7.0"
+  }
+}
