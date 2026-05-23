@@ -17,7 +17,7 @@ The shape of this file:
 
 ## Elevator pitch
 
-A local-first, single-user Next.js 16 / React 19 studio for **OpenRouter** that exposes its routing surface area as a usable UI. Four workflow tabs (Chat, Compare, Multimodal, Models) plus Settings demonstrate distinct OpenRouter routing modes — manual model selection, intelligent auto-routing, free-pool routing, vision routing — with a unified UX layer (markdown rendering, token + dollar cost breakdowns, persistent history, lazy-loaded catalog, server-tool web access, live OpenRouter credits display).
+A local-first, single-user Next.js 16 / React 19 studio for **OpenRouter** that exposes its routing surface area as a usable UI. Five workflow tabs (Chat, Compare, Multimodal, Models, Insights) plus About and Settings expose distinct OpenRouter routing modes — manual model selection, intelligent auto-routing, free-pool routing, vision routing — with a unified UX layer (markdown rendering, token + dollar cost breakdowns, persistent history, lazy-loaded catalog, server-tool web access, live OpenRouter credits display). The Insights tab adds a personal cost-per-good-answer rollup computed over your local history.
 
 The OpenRouter API key lives only on the server; the browser talks to local `/api/*` routes which proxy to OpenRouter so the key is never exposed to client bundles, devtools, or screenshots.
 
@@ -93,7 +93,7 @@ Each tab below follows the same shape: **what it's for**, **what it sends**, **a
 **What it sends:** `POST /chat/completions` (streaming). Model is the preset's currently-mapped id, your manual override, or `openrouter/auto` (the auto-router). When Free Only is on and the preset is Auto, the request additionally carries the `auto-router` plugin with `allowed_models = <every :free model id in the live catalog>` so OpenRouter constrains its routing to the free pool. When Web access is on (Default mode only), the request adds `tools: [{type: 'openrouter:web_search'}, {type: 'openrouter:web_fetch'}]`.
 
 **Example.**
-- Preset: **Quality** (Opus 4.7 with `reasoning.effort=medium`).
+- Preset: **Quality** (Opus 4.5 with `reasoning.effort=medium`).
 - Prompt: *"Explain the difference between B-trees and LSM trees for a database storage layer, and when you'd pick one over the other."* (~25 tokens)
 - Reply: ~700 visible tokens + ~2,400 reasoning tokens (medium effort burns these silently before answering).
 - Bill, default flow: ~$0.06 (input) + ~$0.05 (visible output) + ~$0.18 (reasoning, billed at the output rate) ≈ **$0.29**.
@@ -107,13 +107,13 @@ Each tab below follows the same shape: **what it's for**, **what it sends**, **a
 
 **What it sends:** `POST /chat/completions` (non-streaming) fanned out via `Promise.all`, one call per model card. Each card is billed independently — if one model 402s, the others still complete. Web access adds `tools: […]` to every card's request.
 
-**Per-mode default model lineup** is persisted globally per user: editing a slot in any session updates the saved lineup for that mode, so future sessions inherit your latest 5. Free Only ships with a curated lineup (`arcee/trinity-large-thinking`, `nvidia/nemotron-3-super-120b`, `nousresearch/hermes-3-llama-3.1-405b`, `qwen/qwen3-next-80b`, `openai/gpt-oss-120b` — all `:free`) and falls through gracefully when a curated id rotates out of the free pool.
+**Per-mode default model lineup** is persisted globally per user: editing a slot in any session updates the saved lineup for that mode, so future sessions inherit your latest 5. Free Only ships with a curated lineup (`arcee-ai/trinity-large-thinking:free`, `nvidia/nemotron-3-super-120b-a12b:free`, `nousresearch/hermes-3-llama-3.1-405b:free`, `qwen/qwen3-next-80b-a3b-instruct:free`, `openai/gpt-oss-120b:free` — see `FREE_COMPARE_DEFAULTS` in `lib/routing.ts`) and falls through gracefully when a curated id rotates out of the free pool.
 
 **Example.**
 - Prompt: *"Write a Zod schema in TypeScript for a Stripe `checkout.session.completed` webhook payload. Include only the fields you actually need for fulfillment."* (~30 tokens)
-- Models (the default Compare slate): Opus 4.7, Sonnet 4.6, GPT-5, Gemini 2.5 Pro, Grok 4.
+- Models (the default Compare slate): Opus 4.5, Sonnet 4.6, GPT-5, Gemini 2.5 Pro, Grok 4.
 - Sample bills, default flow (one ~600-token answer each):
-  - Opus 4.7: ~$0.09
+  - Opus 4.5: ~$0.09
   - Sonnet 4.6: ~$0.018
   - GPT-5: ~$0.05 (plus ~1k reasoning at output rate)
   - Gemini 2.5 Pro: ~$0.012
@@ -145,6 +145,19 @@ Each tab below follows the same shape: **what it's for**, **what it sends**, **a
 **Use this when** you want to know what's available before composing a Compare run, look up a model's context window, or check pricing in `$/M tokens` form. The list is **split into two sections**: *Free pool* (emerald-accented, count badge) on top, *Paid catalog* (neutral) below. Each row's **Use in Chat →** button sends you to the Chat tab with that model pinned as a manual override and the chat mode auto-switched (Free Only for `:free` models, Default for everything else).
 
 **What it sends:** `GET /models`, server-cached for 10 minutes. No chat calls, no billing here — the numbers in the table are reference rates for the call you'd make from another tab.
+
+### Insights — your cost-per-good-answer leaderboard
+
+**Use this when** you want to know which models are actually earning their cost on your kinds of prompts. Roll-ups over your local history: 👍 / 👎 ratings on Chat and Compare responses, what each call cost, and the ratio. Models that produce lots of 👍 for little spend rise; expensive models you keep downvoting fall.
+
+**What it sends:** nothing — entirely client-side over `localStorage`. No OpenRouter traffic, no billing. Aggregation logic lives in [`lib/stats.ts`](./lib/stats.ts); the view is `components/InsightsView.tsx`.
+
+**Three views:**
+- *Cost per good answer* — total spent on each model ÷ count of 👍 responses from that model. Rate aggressively for a few days to get a sharp signal; lots of unrated calls dilute it.
+- *Subscription arbitrage* — last-30-days API spend vs. what a $20/mo chat subscription (Claude Pro, ChatGPT Plus, Gemini Advanced) would have cost. Subscriptions and the API are different products; the math assumes you'd switch your usage from this app to the consumer chat product to "save" by going subscription.
+- *Blind preferences* — when you use Compare's Blind mode and pick a winner without seeing model identities, the choice lands here. Removes brand bias from the preference signal.
+
+Also a *Public leaderboard (preview)* card showing what a community-wide rollup would look like, behind an opt-in toggle in Settings. Today's rows are illustrative placeholders — the `/api/leaderboard` route is wired but disabled in the gateway.
 
 ### Settings — local BYOK registry
 
@@ -204,7 +217,7 @@ A four-layer mental model. When something fails, the *kind* of failure tells you
 
 | Layer | Controls |
 |---|---|
-| **Model architecture** | Hard max input context (e.g., 200K for Claude Opus 4.7); hard max output (e.g., 65,536 for some Anthropic models); refusal / safety baked into weights; reasoning capability. |
+| **Model architecture** | Hard max input context (e.g., 200K for Claude Opus 4.5); hard max output (e.g., 65,536 for some Anthropic models); refusal / safety baked into weights; reasoning capability. |
 | **Provider** (Anthropic, OpenAI, Google, …) | Per-token prices (input / cached / output / reasoning); per-tier rate limits (e.g., Anthropic Tier 1 ≈ 50 RPM / 50K TPM); regional availability. |
 | **OpenRouter (gateway)** | Markup (default flow) or ~5% BYOK fee; free-pool rate caps; 402 credit reservation; auto-router model selection; streaming format; plugin system; failover. |
 | **This app** | `max_tokens` defaults per provider ([`lib/budget.ts`](./lib/budget.ts)); auto-retry on 402 and on `finish_reason='length'`; UI caps (5 Compare slots, 4 Multimodal images @ 5 MB). |
