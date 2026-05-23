@@ -2,6 +2,8 @@
 
 A local-first Next.js studio that talks to the [OpenRouter](https://openrouter.ai) API — chat with any of 360+ models, compare up to 5 models side-by-side on the same prompt, route through `openrouter/free` / `openrouter/auto`, and run vision models with image attachment. Markdown rendering, per-tab history, and per-call token / dollar cost breakdowns throughout.
 
+![Polyglot Studio — Compare tab showing 5 models responding to the same prompt with per-call token and dollar cost breakdowns](screenshots/compare.png)
+
 > **Unofficial third-party client.** Not affiliated with, endorsed by, or sponsored by OpenRouter Inc. or any model provider. "OpenRouter" is a trademark of its respective owner; this project uses the name only to identify the API it integrates with.
 
 ## Tabs
